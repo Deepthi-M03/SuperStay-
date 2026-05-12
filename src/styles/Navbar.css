@@ -1,0 +1,41 @@
+.navbar{
+  background:white;
+  padding:20px 0;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.nav-container{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  color:#1A3C5E;
+  font-size:28px;
+  font-weight:700;
+}
+
+.nav-links{
+  display:flex;
+  gap:25px;
+  align-items:center;
+}
+
+.nav-links a{
+  text-decoration:none;
+  color:#1E293B;
+  font-weight:500;
+}
+
+.host-btn{
+  background:#0D9488;
+  color:white;
+  border:none;
+  padding:12px 20px;
+  border-radius:8px;
+  cursor:pointer;
+}

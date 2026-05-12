@@ -1,0 +1,7 @@
+.footer{
+  background:#1A3C5E;
+  color:white;
+  padding:80px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+}
