@@ -15,7 +15,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Blog from "./pages/Blog";
 import FAQ from "./pages/FAQ";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
@@ -41,6 +40,8 @@ import AdminBookings from "./pages/AdminBookings";
 import AdminReviews from "./pages/AdminReviews";
 import AdminSettings from "./pages/AdminSettings";
 
+import Notifications from "./pages/Notifications";
+
 import Booking from "./pages/Booking";
 
 import "./styles/global.css";
@@ -55,7 +56,7 @@ function App() {
 
       <Routes>
 
-        {/* PUBLIC PAGES */}
+      
 
         <Route
           path="/"
@@ -82,10 +83,8 @@ function App() {
           element={<Contact />}
         />
 
-        <Route
-          path="/blog"
-          element={<Blog />}
-        />
+        
+        
 
         <Route
           path="/faq"
@@ -102,8 +101,6 @@ function App() {
           element={<Privacy />}
         />
 
-        {/* AUTH */}
-
         <Route
           path="/login"
           element={<Login />}
@@ -114,7 +111,7 @@ function App() {
           element={<Register />}
         />
 
-        {/* GUEST */}
+        
 
         <Route
           path="/dashboard"
@@ -141,14 +138,14 @@ function App() {
           element={<Wishlist />}
         />
 
-        {/* BOOKING */}
+        
 
         <Route
           path="/booking"
           element={<Booking />}
         />
 
-        {/* PROPERTY MANAGER */}
+       
 
         <Route
           path="/manager/dashboard"
@@ -185,7 +182,7 @@ function App() {
           element={<Earnings />}
         />
 
-        {/* ADMIN */}
+        
 
         <Route
           path="/admin/dashboard"
@@ -216,6 +213,10 @@ function App() {
           path="/admin/settings"
           element={<AdminSettings />}
         />
+        <Route
+  path="/notifications"
+  element={<Notifications />}
+/>
 
       </Routes>
 
