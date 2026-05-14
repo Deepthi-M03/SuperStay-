@@ -1,72 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
+import "./Contact.css";
+
+import {
+  FaEnvelope,
+  FaPhone,
+  FaUser,
+  FaPaperPlane,
+  FaWhatsapp
+} from "react-icons/fa";
 
 function Contact() {
 
-  return (
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
 
+  const sendWhatsApp = () => {
+    const phone = "919876543210";
+    const text = `Hello SuperStay\nName: ${name}\nMessage: ${message}`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
+  return (
     <div className="contact-page">
 
-      <div className="contact-hero">
+      <div className="contact-card">
 
-        <h1>
-          Contact SuperStay
-        </h1>
+        {/* LEFT SIDE */}
+        <div className="contact-left">
+          <h2>Contact Us</h2>
+          <p>We usually respond within minutes</p>
 
-        <p>
-          We are here to help you 24/7
-        </p>
+          <div className="contact-info">
+            <div className="info-item">
+              <FaEnvelope />
+              <span>support@superstay.com</span>
+            </div>
 
-      </div>
-
-      <div className="container contact-container">
-
-        <div className="contact-info">
-
-          <h2>
-            Get In Touch
-          </h2>
-
-          <p>
-            Email:
-            support@superstay.com
-          </p>
-
-          <p>
-            Phone:
-            +91 9876543210
-          </p>
-
-          <p>
-            Address:
-            Chennai, Tamil Nadu, India
-          </p>
-
-          <img
-            src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop"
-            alt=""
-          />
-
+            <div className="info-item">
+              <FaPhone />
+              <span>+91 98765 43210</span>
+            </div>
+          </div>
         </div>
 
-        <div className="contact-form">
+        {/* RIGHT SIDE */}
+        <div className="contact-right">
 
-          <input
-            type="text"
-            placeholder="Your Name"
-          />
+          <div className="input-box">
+            <FaUser />
+            <input
+              type="text"
+              placeholder="Your Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-          <input
-            type="email"
-            placeholder="Your Email"
-          />
+          <div className="input-box">
+            <FaEnvelope />
+            <input type="email" placeholder="Email Address" />
+          </div>
 
           <textarea
-            rows="6"
-            placeholder="Your Message"
-          ></textarea>
+            placeholder="Your message..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            rows="3"
+          />
 
-          <button className="btn">
-            Send Message
+          <button className="btn primary">
+            <FaPaperPlane /> Send Message
+          </button>
+
+          <button className="btn whatsapp" onClick={sendWhatsApp}>
+            <FaWhatsapp /> WhatsApp Chat
           </button>
 
         </div>
@@ -74,7 +81,6 @@ function Contact() {
       </div>
 
     </div>
-
   );
 }
 

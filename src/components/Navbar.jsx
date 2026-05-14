@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+
 import { Link } from "react-router-dom";
 
+import {
+  FaBars,
+  FaTimes,
+  FaBell,
+  FaUserCircle
+} from "react-icons/fa";
+
+import "./Navbar.css";
+
 function Navbar() {
+
+  const [menuOpen,setMenuOpen] =
+  useState(false);
 
   return (
 
@@ -9,11 +22,24 @@ function Navbar() {
 
       <div className="container nav-container">
 
-        <h2 className="logo">
-          SuperStay
-        </h2>
+        {/* LOGO */}
 
-        <div className="nav-links">
+        <Link
+          to="/"
+          className="logo"
+        >
+
+          SuperStay
+
+        </Link>
+
+        {/* DESKTOP LINKS */}
+
+        <div
+          className={`nav-links ${
+            menuOpen ? "active" : ""
+          }`}
+        >
 
           <Link to="/">
             Home
@@ -21,6 +47,10 @@ function Navbar() {
 
           <Link to="/search">
             Stays
+          </Link>
+
+          <Link to="/hostels">
+            Hostels
           </Link>
 
           <Link to="/about">
@@ -32,12 +62,65 @@ function Navbar() {
           </Link>
 
           <Link to="/dashboard">
-            Dashboard
+            Guest Dashboard
           </Link>
 
-          <Link to="/login">
-            Login
+          <Link to="/manager-dashboard">
+            Manager Panel
           </Link>
+
+          <Link to="/notifications">
+            Notifications
+          </Link>
+
+        </div>
+
+        {/* RIGHT SIDE */}
+
+        <div className="nav-right">
+
+          <Link
+            to="/notifications"
+            className="icon-btn"
+          >
+
+            <FaBell />
+
+            <span className="badge">
+              3
+            </span>
+
+          </Link>
+
+          <Link
+            to="/login"
+            className="login-btn"
+          >
+
+            <FaUserCircle />
+
+            Login
+
+          </Link>
+
+          {/* MOBILE MENU */}
+
+          <div
+            className="menu-toggle"
+            onClick={() =>
+              setMenuOpen(!menuOpen)
+            }
+          >
+
+            {
+              menuOpen
+              ?
+              <FaTimes />
+              :
+              <FaBars />
+            }
+
+          </div>
 
         </div>
 

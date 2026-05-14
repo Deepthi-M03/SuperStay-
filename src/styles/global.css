@@ -993,3 +993,47 @@ body{
   border-radius:12px;
   box-shadow:0 5px 20px rgba(0,0,0,0.1);
 }
+@import "./dorm.css";
+.bed-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+  margin-top:30px;
+}
+
+.bed-card{
+  background:white;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.1);
+  text-align:center;
+}
+
+.booked-bed{
+  opacity:0.6;
+}
+
+.book-btn{
+  background:#0D9488;
+  color:white;
+  border:none;
+  padding:12px 20px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.booked-btn{
+  background:#999;
+  color:white;
+  border:none;
+  padding:12px 20px;
+  border-radius:8px;
+}
+
+@media(max-width:768px){
+
+  .bed-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+}

@@ -1,14 +1,11 @@
 import React from "react";
-
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import NotificationBar from "./components/NotificationBar";
 
+/* PAGES */
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Login from "./pages/Login";
@@ -41,189 +38,95 @@ import AdminReviews from "./pages/AdminReviews";
 import AdminSettings from "./pages/AdminSettings";
 
 import Notifications from "./pages/Notifications";
-
 import Booking from "./pages/Booking";
+import Hostels from "./pages/Hostels";
+import HostelDetails from "./pages/HostelDetails";
+
+/* AUTH */
+import ProtectedRoute from "./routes/ProtectedRoute";
+import { ROLES } from "./auth/authRoles";
 
 import "./styles/global.css";
 
 function App() {
 
-  return (
+  const user = JSON.parse(localStorage.getItem("user"));
+  const role = user?.role;
 
+  return (
     <BrowserRouter>
 
+      <NotificationBar />
       <Navbar />
 
       <Routes>
 
-      
+        {/* PUBLIC */}
+        <Route path="/" element={<Home />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/property/:id" element={<PropertyDetails />} />
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
 
-        <Route
-          path="/search"
-          element={<Search />}
-        />
+        {/* AUTH */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/property/:id"
-          element={<PropertyDetails />}
-        />
+        {/* GUEST */}
+        <Route path="/dashboard" element={<GuestDashboard />} />
+        <Route path="/guest-dashboard" element={<GuestDashboard />} />
+        <Route path="/account/bookings/:id" element={<BookingDetail />} />
+        <Route path="/account/settings" element={<Settings />} />
+        <Route path="/account/wishlist" element={<Wishlist />} />
 
-        <Route
-          path="/about"
-          element={<About />}
-        />
+        {/* BOOKING */}
+        <Route path="/booking" element={<Booking />} />
 
-        <Route
-          path="/contact"
-          element={<Contact />}
-        />
+        {/* HOSTELS */}
+        <Route path="/hostels" element={<Hostels />} />
+        <Route path="/hostel/:id" element={<HostelDetails />} />
 
-        
-        
-
-        <Route
-          path="/faq"
-          element={<FAQ />}
-        />
-
-        <Route
-          path="/terms"
-          element={<Terms />}
-        />
-
-        <Route
-          path="/privacy"
-          element={<Privacy />}
-        />
-
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/register"
-          element={<Register />}
-        />
-
-        
-
-        <Route
-          path="/dashboard"
-          element={<GuestDashboard />}
-        />
-
-        <Route
-          path="/guest-dashboard"
-          element={<GuestDashboard />}
-        />
-
-        <Route
-          path="/account/bookings/:id"
-          element={<BookingDetail />}
-        />
-
-        <Route
-          path="/account/settings"
-          element={<Settings />}
-        />
-
-        <Route
-          path="/account/wishlist"
-          element={<Wishlist />}
-        />
-
-        
-
-        <Route
-          path="/booking"
-          element={<Booking />}
-        />
-
-       
-
+        {/* 🔐 MANAGER (PROTECTED) */}
         <Route
           path="/manager/dashboard"
-          element={<ManagerDashboard />}
+          element={
+            <ProtectedRoute
+              user={user}
+              role={role}
+              allowedRole={ROLES.MANAGER}
+            >
+              <ManagerDashboard />
+            </ProtectedRoute>
+          }
         />
 
-        <Route
-          path="/manager-dashboard"
-          element={<ManagerDashboard />}
-        />
+        <Route path="/manager-dashboard" element={<ManagerDashboard />} />
+        <Route path="/manager/properties" element={<MyProperties />} />
+        <Route path="/manager/properties/new" element={<AddProperty />} />
+        <Route path="/manager/calendar/:id" element={<Calendar />} />
+        <Route path="/manager/bookings" element={<BookingManagement />} />
+        <Route path="/manager/earnings" element={<Earnings />} />
 
-        <Route
-          path="/manager/properties"
-          element={<MyProperties />}
-        />
+        {/* ADMIN */}
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/properties" element={<AdminProperties />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/bookings" element={<AdminBookings />} />
+        <Route path="/admin/reviews" element={<AdminReviews />} />
+        <Route path="/admin/settings" element={<AdminSettings />} />
 
-        <Route
-          path="/manager/properties/new"
-          element={<AddProperty />}
-        />
-
-        <Route
-          path="/manager/calendar/:id"
-          element={<Calendar />}
-        />
-
-        <Route
-          path="/manager/bookings"
-          element={<BookingManagement />}
-        />
-
-        <Route
-          path="/manager/earnings"
-          element={<Earnings />}
-        />
-
-        
-
-        <Route
-          path="/admin/dashboard"
-          element={<AdminDashboard />}
-        />
-
-        <Route
-          path="/admin/properties"
-          element={<AdminProperties />}
-        />
-
-        <Route
-          path="/admin/users"
-          element={<AdminUsers />}
-        />
-
-        <Route
-          path="/admin/bookings"
-          element={<AdminBookings />}
-        />
-
-        <Route
-          path="/admin/reviews"
-          element={<AdminReviews />}
-        />
-
-        <Route
-          path="/admin/settings"
-          element={<AdminSettings />}
-        />
-        <Route
-  path="/notifications"
-  element={<Notifications />}
-/>
+        {/* NOTIFICATIONS */}
+        <Route path="/notifications" element={<Notifications />} />
 
       </Routes>
 
       <Footer />
 
     </BrowserRouter>
-
   );
 }
 

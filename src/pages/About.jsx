@@ -1,91 +1,43 @@
 import React from "react";
+import "./About.css";
 
 function About() {
-
   return (
-
     <div className="about-page">
 
       <div className="about-hero">
-
-        <h1>
-          About SuperStay
-        </h1>
-
-        <p>
-          Luxury stays crafted for unforgettable experiences.
-        </p>
-
+        <h1>About SuperStay</h1>
+        <p>Your trusted platform for booking stays worldwide</p>
       </div>
 
-      <div className="container about-content">
+      <div className="about-content">
 
-        <div className="about-text">
-
-          <h2>
-            Our Story
-          </h2>
-
+        <div className="about-box">
+          <h2>Our Mission</h2>
           <p>
-            SuperStay was created to redefine the
-            luxury accommodation experience across India.
-            Our platform connects travellers with
-            premium villas, resorts, apartments and
-            unique stays that combine comfort,
-            elegance and trust.
+            We aim to simplify travel by providing reliable, affordable and comfortable
+            stay options for every traveler.
           </p>
-
-          <p>
-            We believe every journey deserves an
-            exceptional stay experience. From beach
-            villas in Goa to mountain resorts in Manali,
-            SuperStay ensures quality, safety and
-            seamless booking experiences for every guest.
-          </p>
-
-          <h2>
-            Why Choose Us
-          </h2>
-
-          <ul>
-
-            <li>
-              Verified premium properties
-            </li>
-
-            <li>
-              Secure online booking
-            </li>
-
-            <li>
-              Trusted property managers
-            </li>
-
-            <li>
-              24/7 customer support
-            </li>
-
-            <li>
-              Best price guarantee
-            </li>
-
-          </ul>
-
         </div>
 
-        <div className="about-image">
+        <div className="about-box">
+          <h2>Why Choose Us?</h2>
+          <p>
+            Verified properties, secure payments, instant booking, and 24/7 support
+            to ensure a smooth experience.
+          </p>
+        </div>
 
-          <img
-            src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop"
-            alt=""
-          />
-
+        <div className="about-box">
+          <h2>Our Vision</h2>
+          <p>
+            To become a global leader in travel accommodation with seamless user experience.
+          </p>
         </div>
 
       </div>
 
     </div>
-
   );
 }
 

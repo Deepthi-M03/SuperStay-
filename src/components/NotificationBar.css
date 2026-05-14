@@ -1,0 +1,21 @@
+.notification-bar{
+  width:100%;
+  background:#0f172a;
+  color:white;
+  padding:10px 0;
+  overflow:hidden;
+}
+
+.notification-content{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  font-size:14px;
+  font-weight:500;
+}
+
+.notification-content p{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}

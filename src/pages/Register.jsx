@@ -1,35 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
+
+import {
+  createUserWithEmailAndPassword
+} from "firebase/auth";
+
+import { auth } from "../firebase/firebase";
 
 function Register() {
 
+  const [email,setEmail] = useState("");
+
+  const [password,setPassword] = useState("");
+
+  const registerUser = async(e) => {
+
+    e.preventDefault();
+
+    try{
+
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      alert("Registration Successful");
+
+    }
+
+    catch(error){
+
+      alert(error.message);
+
+    }
+
+  };
+
   return (
 
-    <div className="container">
+    <div>
 
-      <div className="login-box">
-
-        <h1>Create Account</h1>
-
-        <input
-          type="text"
-          placeholder="Full Name"
-        />
+      <form onSubmit={registerUser}>
 
         <input
           type="email"
           placeholder="Email"
+          onChange={(e)=>setEmail(e.target.value)}
         />
 
         <input
           type="password"
           placeholder="Password"
+          onChange={(e)=>setPassword(e.target.value)}
         />
 
-        <button className="btn">
+        <button type="submit">
           Register
         </button>
 
-      </div>
+      </form>
 
     </div>
 

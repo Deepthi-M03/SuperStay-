@@ -1,47 +1,113 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  signInWithPopup,
+  signInWithEmailAndPassword
+} from "firebase/auth";
+
+import {
+  auth,
+  provider
+} from "../firebase/firebase";
+
+import {
+  FaGoogle,
+  FaEnvelope,
+  FaLock
+} from "react-icons/fa";
+
+import "./Login.css";
 
 function Login() {
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const loginGoogle = async () => {
+    try {
+      setLoading(true);
+      await signInWithPopup(auth, provider);
+      alert("Login Successful");
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loginEmail = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("Login Successful");
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
+    <div className="auth-page">
 
-    <div className="login-page">
+      <div className="auth-card">
 
-      <div className="login-box">
+        <div className="auth-left">
+          <h1>SuperStay</h1>
+          <p>Find your perfect stay with comfort, trust and ease.</p>
+        </div>
 
-        <h1>
-          Welcome Back
-        </h1>
+        <div className="auth-right">
 
-        <p>
-          Login to continue your luxury stay experience
-        </p>
+          <h2>Welcome Back</h2>
+          <p className="sub">Login to continue</p>
 
-        <input
-          type="email"
-          placeholder="Email Address"
-        />
+          <form onSubmit={loginEmail}>
 
-        <input
-          type="password"
-          placeholder="Password"
-        />
+            <div className="input-box">
+              <FaEnvelope />
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
 
-        <button className="btn login-btn">
-          Login
-        </button>
+            <div className="input-box">
+              <FaLock />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
 
-        <button className="google-btn">
-          Continue with Google
-        </button>
+            <button className="btn primary" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </button>
 
-        <p className="login-link">
-          Don't have an account?
-        </p>
+          </form>
+
+          <div className="divider">OR</div>
+
+          <button className="btn google" onClick={loginGoogle} disabled={loading}>
+            <FaGoogle /> Continue with Google
+          </button>
+
+          <p className="bottom-text">Forgot password?</p>
+          <p className="bottom-text highlight">New here? Create account</p>
+
+        </div>
 
       </div>
 
     </div>
-
   );
 }
 
