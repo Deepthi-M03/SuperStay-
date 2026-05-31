@@ -3,132 +3,183 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
-  FaBars,
-  FaTimes,
-  FaBell,
-  FaUserCircle
-} from "react-icons/fa";
+FaBars,
+FaTimes,
+FaBell,
+FaUserCircle
+}
+from "react-icons/fa";
 
 import "./Navbar.css";
 
-function Navbar() {
 
-  const [menuOpen,setMenuOpen] =
-  useState(false);
+function Navbar(){
 
-  return (
+const [menuOpen,setMenuOpen]
+=
+useState(false);
 
-    <nav className="navbar">
 
-      <div className="container nav-container">
+return(
 
-        {/* LOGO */}
+<nav className="navbar">
 
-        <Link
-          to="/"
-          className="logo"
-        >
+<div className="container nav-container">
 
-          SuperStay
 
-        </Link>
+{/* LOGO */}
 
-        {/* DESKTOP LINKS */}
+<Link
+to="/"
+className="logo"
+>
 
-        <div
-          className={`nav-links ${
-            menuOpen ? "active" : ""
-          }`}
-        >
+SuperStay
 
-          <Link to="/">
-            Home
-          </Link>
+</Link>
 
-          <Link to="/search">
-            Stays
-          </Link>
 
-          <Link to="/hostels">
-            Hostels
-          </Link>
 
-          <Link to="/about">
-            About
-          </Link>
+{/* NAV LINKS */}
 
-          <Link to="/contact">
-            Contact
-          </Link>
+<div
 
-          <Link to="/dashboard">
-            Guest Dashboard
-          </Link>
+className={
 
-          <Link to="/manager-dashboard">
-            Manager Panel
-          </Link>
+`nav-links
 
-          <Link to="/notifications">
-            Notifications
-          </Link>
+${
 
-        </div>
+menuOpen
 
-        {/* RIGHT SIDE */}
+?
 
-        <div className="nav-right">
+"active"
 
-          <Link
-            to="/notifications"
-            className="icon-btn"
-          >
+:
 
-            <FaBell />
+""
 
-            <span className="badge">
-              3
-            </span>
+}`
 
-          </Link>
-
-          <Link
-            to="/login"
-            className="login-btn"
-          >
-
-            <FaUserCircle />
-
-            Login
-
-          </Link>
-
-          {/* MOBILE MENU */}
-
-          <div
-            className="menu-toggle"
-            onClick={() =>
-              setMenuOpen(!menuOpen)
-            }
-          >
-
-            {
-              menuOpen
-              ?
-              <FaTimes />
-              :
-              <FaBars />
-            }
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </nav>
-
-  );
 }
+
+>
+
+<Link to="/">
+Home
+</Link>
+
+
+<Link to="/search">
+Stays
+</Link>
+
+
+<Link to="/hostels">
+Hostels
+</Link>
+
+
+<Link to="/about">
+About
+</Link>
+
+
+<Link to="/contact">
+Contact
+</Link>
+
+
+<Link to="/notifications">
+Notifications
+</Link>
+
+</div>
+
+
+
+{/* RIGHT */}
+
+<div className="nav-right">
+
+
+<Link
+
+to="/notifications"
+
+className="icon-btn"
+
+>
+
+<FaBell/>
+
+<span className="badge">
+
+3
+
+</span>
+
+</Link>
+
+
+
+<Link
+
+to="/login"
+
+className="login-btn"
+
+>
+
+<FaUserCircle/>
+
+Login
+
+</Link>
+
+
+
+<div
+
+className="menu-toggle"
+
+onClick={()=>
+
+setMenuOpen(
+!menuOpen
+)
+
+}
+
+>
+
+{
+
+menuOpen
+
+?
+
+<FaTimes/>
+
+:
+
+<FaBars/>
+
+}
+
+</div>
+
+
+</div>
+
+</div>
+
+</nav>
+
+);
+
+}
+
 
 export default Navbar;

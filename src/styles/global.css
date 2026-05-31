@@ -1037,3 +1037,42 @@ body{
   }
 
 }
+.how-card,
+.destination-card{
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+
+.how-card:hover,
+.destination-card:hover{
+
+transform:
+translateY(-8px);
+
+box-shadow:
+0 10px 25px rgba(
+0,0,0,.12
+);
+
+}
+
+
+.view-btn{
+
+padding:10px 18px;
+
+border:none;
+
+background:#2563eb;
+
+color:white;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}

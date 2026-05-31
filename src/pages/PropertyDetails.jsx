@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import {
   FaMapMarkerAlt,
@@ -8,440 +9,717 @@ import {
   FaParking,
   FaSnowflake,
   FaHeart,
+  FaRegHeart,
   FaUserFriends,
   FaBed,
   FaBath,
   FaCheckCircle,
-  FaRegHeart,
   FaArrowLeft,
   FaArrowRight
 } from "react-icons/fa";
 
+import properties from "../data/properties";
 import "./PropertyDetails.css";
 
 function PropertyDetails() {
 
-  const [saved, setSaved] = useState(false);
+  const { id } = useParams();
 
-  const [imageIndex, setImageIndex] = useState(0);
-
-  const images = [
-    "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1200&auto=format&fit=crop"
-  ];
-
-  const nextImage = () => {
-    setImageIndex((prev) =>
-      prev === images.length - 1 ? 0 : prev + 1
+  const property =
+    properties.find(
+      p => p.id === Number(id)
     );
+
+  const [saved,setSaved] =
+    useState(false);
+
+  const [imageIndex,setImageIndex] =
+    useState(0);
+
+  const [name,setName] =
+    useState("");
+
+  const [review,setReview] =
+    useState("");
+
+  const [rating,setRating] =
+    useState(0);
+
+  const [reviews,setReviews] =
+    useState(
+      JSON.parse(
+        localStorage.getItem("reviews")
+      ) || []
+    );
+
+  const [checkIn,setCheckIn] =
+    useState("");
+
+  const [checkOut,setCheckOut] =
+    useState("");
+
+  const [guests,setGuests] =
+    useState("1");
+
+
+  if(!property){
+    return <h1>Property not found</h1>;
+  }
+
+  const images =
+    property.images ||
+    [property.image];
+
+
+  /* FILTER REVIEWS FOR THIS PROPERTY */
+
+  const propertyReviews =
+    reviews.filter(
+      r =>
+      r.propertyId === id
+    );
+
+  const avgRating =
+
+    propertyReviews.length
+
+    ?
+
+    (
+
+      propertyReviews.reduce(
+
+        (sum,r)=>
+
+        sum +
+        Number(r.rating),
+
+        0
+
+      )
+
+      /
+
+      propertyReviews.length
+
+    ).toFixed(1)
+
+    :
+
+    0;
+
+
+  const nextImage = ()=>{
+
+    setImageIndex(
+
+      imageIndex===images.length-1
+
+      ?0
+
+      :imageIndex+1
+
+    );
+
   };
 
-  const prevImage = () => {
-    setImageIndex((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1
+
+  const prevImage = ()=>{
+
+    setImageIndex(
+
+      imageIndex===0
+
+      ?
+
+      images.length-1
+
+      :
+
+      imageIndex-1
+
     );
+
   };
 
-  return (
 
-    <div className="property-page">
+  const submitReview = ()=>{
 
-      {/* HERO IMAGE */}
+    if(
+      !name ||
+      !review ||
+      !rating
+    ){
 
-      <div className="property-hero">
+      alert(
+        "Fill all fields"
+      );
 
-        <img
-          src={images[imageIndex]}
-          alt="stay"
-        />
+      return;
 
-        <button
-          className="gallery-btn left"
-          onClick={prevImage}
-        >
-          <FaArrowLeft />
-        </button>
+    }
 
-        <button
-          className="gallery-btn right"
-          onClick={nextImage}
-        >
-          <FaArrowRight />
-        </button>
 
-      </div>
+    const newReview={
 
-      {/* MAIN CONTENT */}
+      propertyId:id,
 
-      <div className="property-container">
+      name,
 
-        {/* LEFT SIDE */}
+      comment:review,
 
-        <div className="property-left">
+      rating
 
-          <div className="property-header">
+    };
 
-            <div>
 
-              <h1>
-                Luxury Beach Resort
-              </h1>
+    const updated=[
 
-              <p className="location">
-                <FaMapMarkerAlt />
-                Goa, India
-              </p>
+      ...reviews,
 
-            </div>
+      newReview
 
-            <button
-              className="save-btn"
-              onClick={() =>
-                setSaved(!saved)
-              }
-            >
-              {
-                saved ? (
-                  <FaHeart />
-                ) : (
-                  <FaRegHeart />
-                )
-              }
+    ];
 
-              Save
-            </button>
 
-          </div>
+    setReviews(
+      updated
+    );
 
-          {/* STATS */}
 
-          <div className="stats-bar">
+    localStorage.setItem(
 
-            <div>
-              <FaUserFriends />
-              6 Guests
-            </div>
+      "reviews",
 
-            <div>
-              <FaBed />
-              3 Bedrooms
-            </div>
+      JSON.stringify(
+        updated
+      )
 
-            <div>
-              <FaBath />
-              2 Bathrooms
-            </div>
+    );
 
-          </div>
 
-          {/* HOST */}
+    setName("");
+    setReview("");
+    setRating(0);
 
-          <div className="host-box">
+  };
 
-            <img
-              src="https://randomuser.me/api/portraits/men/45.jpg"
-              alt="host"
-            />
 
-            <div>
+  const reserveStay=()=>{
 
-              <h3>
-                Hosted by Arjun Kumar
-              </h3>
+    alert(
+      "Booking saved"
+    );
 
-              <p>
-                Superhost • 5 Years Hosting
-              </p>
+  };
 
-            </div>
 
-            <button className="message-btn">
-              Message Host
-            </button>
 
-          </div>
+return(
 
-          {/* DESCRIPTION */}
+<div className="property-page">
 
-          <div className="section">
 
-            <h2>
-              About this stay
-            </h2>
+{/* IMAGE */}
 
-            <p>
-              Experience luxury beachfront living
-              with breathtaking ocean views,
-              premium interiors, infinity pool,
-              modern amenities and world-class
-              hospitality. Ideal for families,
-              couples and group vacations.
-            </p>
+<div className="property-hero">
 
-          </div>
+<img
+src={images[imageIndex]}
+alt=""
+/>
 
-          {/* AMENITIES */}
 
-          <div className="section">
+<button
+className="gallery-btn left"
+onClick={prevImage}
+>
 
-            <h2>
-              Amenities
-            </h2>
+<FaArrowLeft/>
 
-            <div className="amenities-grid">
+</button>
 
-              <div>
-                <FaWifi />
-                Free WiFi
-              </div>
 
-              <div>
-                <FaSwimmingPool />
-                Swimming Pool
-              </div>
+<button
+className="gallery-btn right"
+onClick={nextImage}
+>
 
-              <div>
-                <FaParking />
-                Parking
-              </div>
+<FaArrowRight/>
 
-              <div>
-                <FaSnowflake />
-                Air Conditioning
-              </div>
+</button>
 
-            </div>
 
-          </div>
+</div>
 
-          {/* HOUSE RULES */}
 
-          <div className="section">
 
-            <h2>
-              House Rules
-            </h2>
+<div className="property-container">
 
-            <ul>
 
-              <li>
-                Check-in: After 2 PM
-              </li>
+{/* LEFT */}
 
-              <li>
-                Check-out: Before 11 AM
-              </li>
+<div className="property-left">
 
-              <li>
-                No Smoking
-              </li>
 
-              <li>
-                Pets Allowed
-              </li>
+<div className="property-header">
 
-            </ul>
+<div>
 
-          </div>
+<h1>
 
-          {/* REVIEWS */}
+{property.title}
 
-          <div className="section">
+</h1>
 
-            <h2>
-              Guest Reviews
-            </h2>
 
-            <div className="review-card">
+<p className="location">
 
-              <div className="review-top">
+<FaMapMarkerAlt/>
 
-                <img
-                  src="https://randomuser.me/api/portraits/women/65.jpg"
-                  alt="guest"
-                />
+{property.location}
 
-                <div>
+</p>
 
-                  <h4>
-                    Priyadharshini
-                  </h4>
+</div>
 
-                  <p>
-                    Chennai
-                  </p>
 
-                </div>
 
-              </div>
+<button
 
-              <div className="stars">
+className="save-btn"
 
-                <FaStar />
-                <FaStar />
-                <FaStar />
-                <FaStar />
-                <FaStar />
+onClick={()=>
+setSaved(
+!saved
+)
+}
 
-              </div>
+>
 
-              <p>
-                Amazing stay experience with
-                premium service and beautiful
-                sea view. Highly recommended.
-              </p>
+{
 
-            </div>
+saved
 
-          </div>
+?
 
-        </div>
+<FaHeart/>
 
-        {/* RIGHT SIDE BOOKING */}
+:
 
-        <div className="booking-widget">
+<FaRegHeart/>
 
-          <h2>
-            ₹12,000
-            <span>
-              /night
-            </span>
-          </h2>
+}
 
-          <div className="rating-row">
+Save
 
-            <FaStar />
+</button>
 
-            <span>
-              4.9 (124 Reviews)
-            </span>
 
-          </div>
+</div>
 
-          <div className="booking-box">
 
-            <div className="booking-input">
 
-              <label>
-                Check-In
-              </label>
+<div className="stats-bar">
 
-              <input type="date" />
+<div>
 
-            </div>
+<FaUserFriends/>
 
-            <div className="booking-input">
+6 Guests
 
-              <label>
-                Check-Out
-              </label>
+</div>
 
-              <input type="date" />
 
-            </div>
+<div>
 
-            <div className="booking-input">
+<FaBed/>
 
-              <label>
-                Guests
-              </label>
+3 Beds
 
-              <select>
+</div>
 
-                <option>
-                  1 Guest
-                </option>
 
-                <option>
-                  2 Guests
-                </option>
+<div>
 
-                <option>
-                  4 Guests
-                </option>
+<FaBath/>
 
-                <option>
-                  6 Guests
-                </option>
+2 Baths
 
-              </select>
+</div>
 
-            </div>
+</div>
 
-            <button className="reserve-btn">
-              Reserve Now
-            </button>
 
-          </div>
 
-          {/* PRICE DETAILS */}
+<div className="section">
 
-          <div className="price-breakdown">
+<h2>
 
-            <div>
-              <span>
-                ₹12,000 × 3 nights
-              </span>
+About Stay
 
-              <span>
-                ₹36,000
-              </span>
+</h2>
 
-            </div>
+<p>
 
-            <div>
-              <span>
-                Cleaning Fee
-              </span>
+{property.description}
 
-              <span>
-                ₹2,000
-              </span>
+</p>
 
-            </div>
+</div>
 
-            <div>
-              <span>
-                Service Fee
-              </span>
 
-              <span>
-                ₹1,500
-              </span>
 
-            </div>
+<div className="section">
 
-            <div className="total-price">
+<h2>
 
-              <span>
-                Total
-              </span>
+Amenities
 
-              <span>
-                ₹39,500
-              </span>
+</h2>
 
-            </div>
 
-          </div>
+<div className="amenities-grid">
 
-          <div className="instant-book">
+<div>
 
-            <FaCheckCircle />
+<FaWifi/>
 
-            Instant Book Available
+Wifi
 
-          </div>
+</div>
 
-        </div>
 
-      </div>
+<div>
 
-    </div>
-  );
+<FaSwimmingPool/>
+
+Pool
+
+</div>
+
+
+<div>
+
+<FaParking/>
+
+Parking
+
+</div>
+
+
+<div>
+
+<FaSnowflake/>
+
+AC
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+{/* REVIEW */}
+
+<div className="section">
+
+<h2>
+
+Guest Reviews
+
+</h2>
+
+
+
+<input
+
+placeholder="Name"
+
+value={name}
+
+onChange={(e)=>
+setName(
+e.target.value
+)
+}
+
+/>
+
+
+
+<textarea
+
+placeholder=
+"Write review"
+
+value={review}
+
+onChange={(e)=>
+setReview(
+e.target.value
+)
+}
+
+/>
+
+
+
+{/* CLICKABLE STARS */}
+
+<div className="rating-stars">
+
+{
+
+[1,2,3,4,5].map(
+
+(star)=>(
+
+<FaStar
+
+key={star}
+
+onClick={()=>
+setRating(
+star
+)
+}
+
+style={{
+
+cursor:"pointer",
+
+fontSize:"28px",
+
+color:
+
+star <= rating
+
+?
+
+"gold"
+
+:
+
+"#ccc"
+
+}}
+
+ />
+
+))
+
+}
+
+</div>
+
+
+<p>
+
+Selected:
+
+{rating}
+
+Stars
+
+</p>
+
+
+
+<button
+onClick={
+submitReview
+}
+>
+
+Submit Review
+
+</button>
+
+
+
+{
+
+propertyReviews.map(
+
+(r,index)=>(
+
+<div
+key={index}
+className="review-card"
+>
+
+<h4>
+
+{r.name}
+
+</h4>
+
+
+<div>
+
+{
+
+[...Array(
+r.rating
+)].map(
+
+(_,i)=>
+
+<FaStar
+key={i}
+color="gold"
+/>
+
+)
+
+}
+
+</div>
+
+
+<p>
+
+{r.comment}
+
+</p>
+
+</div>
+
+))
+
+}
+
+</div>
+
+
+</div>
+
+
+
+{/* BOOKING */}
+
+<div className="booking-widget">
+
+<h2>
+
+₹{property.price}
+
+<span>
+
+/night
+
+</span>
+
+</h2>
+
+
+
+{/* LIVE RATING */}
+
+<div className="rating-row">
+
+<FaStar color="gold"/>
+
+<span>
+
+{avgRating}
+
+(
+
+{propertyReviews.length}
+
+reviews )
+
+</span>
+
+</div>
+
+
+
+<input
+type="date"
+value={checkIn}
+onChange={(e)=>
+setCheckIn(
+e.target.value
+)}
+/>
+
+
+<input
+type="date"
+value={checkOut}
+onChange={(e)=>
+setCheckOut(
+e.target.value
+)}
+/>
+
+
+<select
+
+value={guests}
+
+onChange={(e)=>
+setGuests(
+e.target.value
+)
+}
+
+>
+
+<option>
+1 Guest
+</option>
+
+<option>
+2 Guests
+</option>
+
+<option>
+4 Guests
+</option>
+
+<option>
+6 Guests
+</option>
+
+</select>
+
+
+
+<button
+className="reserve-btn"
+onClick={reserveStay}
+>
+
+Reserve Now
+
+</button>
+
+
+
+<div className="instant-book">
+
+<FaCheckCircle/>
+
+Instant Book
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+);
+
 }
 
 export default PropertyDetails;

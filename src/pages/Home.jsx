@@ -1,10 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
-  FaSearch,
-  FaCalendarCheck,
-  FaHome
-} from "react-icons/fa";
+FaSearch,
+FaCalendarCheck,
+FaHome
+}
+from "react-icons/fa";
 
 import Hero from "../components/Hero";
 import PropertyCard from "../components/PropertyCard";
@@ -13,280 +15,497 @@ import properties from "../data/properties";
 
 function Home() {
 
-  return (
+const navigate = useNavigate();
 
-    <div>
+return (
 
-      {/* Hero Section */}
+<div>
 
-      <Hero />
+{/* HERO */}
 
-      {/* Featured Properties */}
+<Hero />
 
-      <section className="featured-section container">
 
-        <div className="section-header">
 
-          <div>
+{/* FEATURED STAYS */}
 
-            <h2>
-              Featured Luxury Stays
-            </h2>
+<section className="featured-section container">
 
-            <p>
-              Explore premium villas, apartments
-              and luxury resorts across India.
-            </p>
+<div className="section-header">
 
-          </div>
+<div>
 
-          <a href="/search">
-            View All
-          </a>
+<h2>
+Featured Luxury Stays
+</h2>
 
-        </div>
+<p>
+Explore premium villas,
+apartments and luxury resorts
+across India.
+</p>
 
-        <div className="property-grid">
+</div>
 
-          {
-            properties.slice(0,6).map((property)=>(
 
-              <PropertyCard
-                key={property.id}
-                property={property}
-              />
+<button
+className="view-btn"
 
-            ))
-          }
+onClick={() =>
+navigate("/search")
+}
+>
 
-        </div>
+View All
 
-      </section>
+</button>
 
-      {/* How It Works */}
+</div>
 
-      <section className="how-section">
 
-        <div className="container">
 
-          <h2 className="section-title">
-            How SuperStay Works
-          </h2>
+<div className="property-grid">
 
-          <div className="how-grid">
+{
 
-            {/* Search */}
+properties
+.slice(0,6)
 
-            <div className="how-card">
+.map((property)=>(
 
-              <div className="how-icon">
-                <FaSearch />
-              </div>
+<div
 
-              <h3>
-                Search
-              </h3>
+key={property.id}
 
-              <p>
-                Search from premium villas,
-                resorts and luxury apartments
-                across top destinations.
-              </p>
+onClick={() =>
+navigate(
+`/property/${property.id}`
+)
+}
 
-            </div>
+style={{
+cursor:"pointer"
+}}
 
-            {/* Book */}
+>
 
-            <div className="how-card">
+<PropertyCard
+property={property}
+/>
 
-              <div className="how-icon">
-                <FaCalendarCheck />
-              </div>
+</div>
 
-              <h3>
-                Book
-              </h3>
+))
 
-              <p>
-                Secure your stay instantly with
-                safe online payment and smooth
-                reservation process.
-              </p>
+}
 
-            </div>
+</div>
 
-            {/* Stay */}
+</section>
 
-            <div className="how-card">
 
-              <div className="how-icon">
-                <FaHome />
-              </div>
 
-              <h3>
-                Stay
-              </h3>
+{/* HOW SUPERSTAY WORKS */}
 
-              <p>
-                Enjoy luxury comfort, premium
-                hospitality and unforgettable
-                experiences with SuperStay.
-              </p>
+<section className="how-section">
 
-            </div>
+<div className="container">
 
-          </div>
+<h2 className="section-title">
 
-        </div>
+How SuperStay Works
 
-      </section>
+</h2>
 
-      {/* Popular Destinations */}
 
-      <section className="destination-section container">
 
-        <h2 className="section-title">
-          Popular Destinations
-        </h2>
+<div className="how-grid">
 
-        <div className="destination-grid">
 
-          <div className="destination-card">
+{/* SEARCH */}
 
-            <img
-              src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1200&auto=format&fit=crop"
-              alt=""
-            />
+<div
 
-            <h3>
-              Goa
-            </h3>
+className="how-card"
 
-          </div>
+onClick={() =>
+navigate("/search")
+}
 
-          <div className="destination-card">
+>
 
-            <img
-              src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop"
-              alt=""
-            />
+<div className="how-icon">
 
-            <h3>
-              Manali
-            </h3>
+<FaSearch/>
 
-          </div>
+</div>
 
-          <div className="destination-card">
+<h3>
 
-            <img
-              src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop"
-              alt=""
-            />
+Search
 
-            <h3>
-              Mumbai
-            </h3>
+</h3>
 
-          </div>
+<p>
 
-        </div>
+Find stays easily
 
-      </section>
+</p>
 
-      {/* Guest Testimonials */}
+</div>
 
-      <section className="testimonial-section">
 
-        <div className="container">
 
-          <h2 className="section-title">
-            Guest Testimonials
-          </h2>
 
-          <div className="testimonial-grid">
+{/* BOOK */}
 
-            {/* Testimonial 1 */}
+<div
 
-            <div className="testimonial-card">
+className="how-card"
 
-              <img
-                src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=500&auto=format&fit=crop"
-                alt=""
-              />
+onClick={() =>
+navigate("/booking")
+}
 
-              <h3>
-                Kavya Srinivasan
-              </h3>
+>
 
-              <p>
-                ★★★★★
-              </p>
+<div className="how-icon">
 
-              <p>
-                Wonderful hospitality and beautiful luxury stay.
-                The rooms were very clean and peaceful.
-              </p>
+<FaCalendarCheck/>
 
-            </div>
+</div>
 
-            {/* Testimonial 2 */}
+<h3>
 
-            <div className="testimonial-card">
+Book
 
-              <img
-                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=500&auto=format&fit=crop"
-                alt=""
-              />
+</h3>
 
-              <h3>
-                Arjun Kumar
-              </h3>
+<p>
 
-              <p>
-                ★★★★★
-              </p>
+Reserve instantly
 
-              <p>
-                Booking experience was smooth and the resort
-                atmosphere was truly premium and relaxing.
-              </p>
+</p>
 
-            </div>
+</div>
 
-            {/* Testimonial 3 */}
 
-            <div className="testimonial-card">
 
-              <img
-                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=500&auto=format&fit=crop"
-                alt=""
-              />
 
-              <h3>
-                Meena Lakshmi
-              </h3>
+{/* STAY */}
 
-              <p>
-                ★★★★★
-              </p>
+<div
 
-              <p>
-                One of the best family vacation stays we had.
-                Excellent service and amazing food.
-              </p>
+className="how-card"
 
-            </div>
+onClick={() =>
+navigate("/hostels")
+}
 
-          </div>
+>
 
-        </div>
+<div className="how-icon">
 
-      </section>
+<FaHome/>
 
-    </div>
+</div>
 
-  );
+<h3>
+
+Stay
+
+</h3>
+
+<p>
+
+Enjoy premium comfort
+
+</p>
+
+</div>
+
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+{/* POPULAR DESTINATIONS */}
+
+<section className="destination-section container">
+
+<h2 className="section-title">
+
+Popular Destinations
+
+</h2>
+
+
+
+<div className="destination-grid">
+
+
+
+<div
+
+className="destination-card"
+
+onClick={() =>
+navigate("/search?location=Goa")
+}
+
+>
+
+<img
+
+src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1200"
+
+alt="Goa"
+
+/>
+
+<h3>
+
+Goa
+
+</h3>
+
+</div>
+
+
+
+
+<div
+
+className="destination-card"
+
+onClick={() =>
+navigate("/search?location=Manali")
+}
+
+>
+
+<img
+
+src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200"
+
+alt="Manali"
+
+/>
+
+<h3>
+
+Manali
+
+</h3>
+
+</div>
+
+
+
+
+<div
+
+className="destination-card"
+
+onClick={() =>
+navigate("/search?location=Mumbai")
+}
+
+>
+
+<img
+
+src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200"
+
+alt="Mumbai"
+
+/>
+
+<h3>
+
+Mumbai
+
+</h3>
+
+</div>
+
+
+
+</div>
+
+</section>
+
+
+
+{/* TESTIMONIALS */}
+
+<section className="testimonial-section">
+
+<div className="container">
+
+<h2 className="section-title">
+
+Guest Testimonials
+
+</h2>
+
+
+
+<div className="testimonial-grid">
+
+
+{/* EXISTING REVIEWS */}
+
+<div className="testimonial-card">
+
+<img
+src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=500"
+alt=""
+/>
+
+<h3>
+
+Kavya Srinivasan
+
+</h3>
+
+<p>
+
+★★★★★
+
+</p>
+
+<p>
+
+Wonderful hospitality and
+beautiful luxury stay.
+
+</p>
+
+</div>
+
+
+
+<div className="testimonial-card">
+
+<img
+src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=500"
+alt=""
+/>
+
+<h3>
+
+Arjun Kumar
+
+</h3>
+
+<p>
+
+★★★★★
+
+</p>
+
+<p>
+
+Booking experience was smooth.
+
+</p>
+
+</div>
+
+
+
+<div className="testimonial-card">
+
+<img
+src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=500"
+alt=""
+/>
+
+<h3>
+
+Meena Lakshmi
+
+</h3>
+
+<p>
+
+★★★★★
+
+</p>
+
+<p>
+
+Excellent service and food.
+
+</p>
+
+</div>
+
+
+
+{/* USER REVIEWS */}
+
+{
+
+JSON.parse(
+localStorage.getItem(
+"reviews"
+)
+||"[]"
+
+).map(
+
+(review,index)=>(
+
+<div
+key={index}
+
+className="testimonial-card"
+>
+
+<h3>
+
+{review.name}
+
+</h3>
+
+<p>
+
+{"★".repeat(
+review.rating
+)}
+
+</p>
+
+<p>
+
+{review.comment}
+
+</p>
+
+</div>
+
+))
+
+}
+
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+);
+
 }
 
 export default Home;

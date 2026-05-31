@@ -344,3 +344,67 @@
   }
 
 }
+.rating-stars{
+
+display:flex;
+gap:8px;
+font-size:24px;
+margin:10px 0;
+
+}
+
+
+.section input,
+.section textarea{
+
+width:100%;
+padding:12px;
+margin-bottom:10px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+}
+
+
+.section button{
+
+padding:12px;
+
+background:#2563eb;
+
+color:white;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}
+.rating-stars{
+
+display:flex;
+gap:10px;
+margin:15px 0;
+
+}
+
+.rating-stars svg:hover{
+
+transform:scale(1.2);
+
+transition:.2s;
+
+}
+
+.rating-row{
+
+display:flex;
+gap:8px;
+align-items:center;
+margin:10px 0;
+font-weight:600;
+
+}

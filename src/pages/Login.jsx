@@ -1,114 +1,244 @@
-import React, { useState } from "react";
+import React,{useState} from "react";
+import axios from "axios";
 import {
-  signInWithPopup,
-  signInWithEmailAndPassword
-} from "firebase/auth";
+FaEnvelope,
+FaLock,
+FaEye,
+FaEyeSlash
+}
+from "react-icons/fa";
 
-import {
-  auth,
-  provider
-} from "../firebase/firebase";
-
-import {
-  FaGoogle,
-  FaEnvelope,
-  FaLock
-} from "react-icons/fa";
+import { Link,useNavigate }
+from "react-router-dom";
 
 import "./Login.css";
 
-function Login() {
+function Login(){
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+const navigate =
+useNavigate();
 
-  const loginGoogle = async () => {
-    try {
-      setLoading(true);
-      await signInWithPopup(auth, provider);
-      alert("Login Successful");
-    } catch (err) {
-      alert(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+const[email,setEmail]=
+useState("");
 
-  const loginEmail = async (e) => {
-    e.preventDefault();
+const[password,setPassword]=
+useState("");
 
-    try {
-      setLoading(true);
-      await signInWithEmailAndPassword(auth, email, password);
-      alert("Login Successful");
-    } catch (err) {
-      alert(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+const[show,setShow]=
+useState(false);
 
-  return (
-    <div className="auth-page">
 
-      <div className="auth-card">
+const handleLogin =
+async()=>{
 
-        <div className="auth-left">
-          <h1>SuperStay</h1>
-          <p>Find your perfect stay with comfort, trust and ease.</p>
-        </div>
+try{
 
-        <div className="auth-right">
+const res =
+await axios.post(
 
-          <h2>Welcome Back</h2>
-          <p className="sub">Login to continue</p>
+"http://localhost:5000/api/auth/login",
 
-          <form onSubmit={loginEmail}>
+{
 
-            <div className="input-box">
-              <FaEnvelope />
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
+email,
+password
 
-            <div className="input-box">
-              <FaLock />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+}
 
-            <button className="btn primary" disabled={loading}>
-              {loading ? "Logging in..." : "Login"}
-            </button>
+);
 
-          </form>
 
-          <div className="divider">OR</div>
+localStorage.setItem(
 
-          <button className="btn google" onClick={loginGoogle} disabled={loading}>
-            <FaGoogle /> Continue with Google
-          </button>
+"token",
 
-          <p className="bottom-text">Forgot password?</p>
-          <p className="bottom-text highlight">New here? Create account</p>
+res.data.token
 
-        </div>
+);
 
-      </div>
 
-    </div>
-  );
+localStorage.setItem(
+
+"user",
+
+JSON.stringify(
+res.data.user
+)
+
+);
+
+
+alert(
+"Login Success"
+);
+
+navigate("/");
+
+
+}
+
+catch(err){
+
+alert(
+"Wrong email/password"
+);
+
+}
+
+};
+
+
+
+return(
+
+<div className="login-page">
+
+<div className="login-left">
+
+<div className="overlay">
+
+<h1>
+
+Luxury stays.<br/>
+Simple booking.
+
+</h1>
+
+<p>
+
+Premium villas,
+resorts &
+hostels.
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<div className="login-right">
+
+<div className="login-box">
+
+
+<div className="brand">
+
+SuperStay
+
+</div>
+
+
+<h2>
+
+Welcome Back
+
+</h2>
+
+
+<div className="input">
+
+<FaEnvelope/>
+
+<input
+
+type="email"
+
+placeholder="Email"
+
+value={email}
+
+onChange={(e)=>
+setEmail(
+e.target.value
+)}
+
+ />
+
+</div>
+
+
+
+<div className="input">
+
+<FaLock/>
+
+<input
+
+type={
+show
+?
+"text"
+:
+"password"
+}
+
+placeholder="Password"
+
+value={password}
+
+onChange={(e)=>
+setPassword(
+e.target.value
+)}
+
+ />
+
+
+<div
+onClick={()=>
+setShow(!show)
+}
+>
+
+{
+show
+?
+<FaEyeSlash/>
+:
+<FaEye/>
+}
+
+</div>
+
+</div>
+
+
+
+<button
+onClick={
+handleLogin
+}
+>
+
+Login
+
+</button>
+
+
+
+<div className="bottom">
+
+Don't have account?
+
+<Link to="/register">
+
+Register
+
+</Link>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+);
+
 }
 
 export default Login;
